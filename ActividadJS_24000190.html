@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack</title>
+</head>
+<body>
+
+<script>
+    var nombreJugador = prompt("¿Cuál es su Nombre de Jugador?");
+    
+    var cartasJugador = [Math.floor(Math.random()*11) + 1, Math.floor(Math.random()*11) + 1];
+    var cartasComputadora = [Math.floor(Math.random()*11) + 1, Math.floor(Math.random()*11) + 1];
+
+    var turnoJugador = true;
+
+    while (turnoJugador && cartasJugador.reduce((total, carta) => total + carta, 0) <= 21) {
+        var totalJugador = cartasJugador.reduce((total, carta) => total + carta, 0);
+
+        var cartasUsuarioPp = "Tus cartas son: " + cartasJugador.join(", ") + ". Total: " + totalJugador;
+        var cartasComputadoraSp = "Cartas de la computadora: " + cartasComputadora[0] + ", ?";
+
+        var cartasAdd = prompt(cartasUsuarioPp + "\n" + cartasComputadoraSp + "\n¿Quieres otra carta?");
+
+        if (cartasAdd.toLowerCase() === "si" || cartasAdd.toLowerCase() === "sí") {
+            cartasJugador.push(Math.floor(Math.random()*11) + 1);
+        } else {
+            turnoJugador = false;
+        }
+    }
+
+    while (cartasComputadora.reduce((total, carta) => total + carta, 0) < 17) {
+        cartasComputadora.push(Math.floor(Math.random()*11) + 1);
+    }
+
+    var totalJugador = cartasJugador.reduce((total, carta) => total + carta, 0);
+    var totalComputadora = cartasComputadora.reduce((total, carta) => total + carta, 0);
+
+    alert("Tus cartas: " + cartasJugador.join(", ") + ". Total: " + totalJugador + "\n\n" +
+          "Cartas de la computadora: " + cartasComputadora.join(", ") + ". Total: " + totalComputadora);
+
+    if (totalJugador > 21 || (totalComputadora <= 21 && totalJugador < totalComputadora)) {
+        alert("La computadora gana.");
+    } else if (totalComputadora > 21 || totalJugador > totalComputadora) {
+        alert("¡Ganas!");
+    } else {
+        alert("Es un empate.");
+    }
+
+</script>
+
+</body>
+</html>
